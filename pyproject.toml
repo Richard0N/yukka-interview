@@ -23,6 +23,7 @@ packages = ["src/honey"]
 
 [dependency-groups]
 dev = [
+    "marimo>=0.19.6",
     "pytest>=8.0",
     "pytest-mock>=3.14",
     "ruff>=0.15.13",
