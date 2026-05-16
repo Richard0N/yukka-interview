@@ -3,7 +3,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [project]
-name = "honey"
+name = "yukka-interview"
 version = "0.1.0"
 description = "Yukka Lab interview take-home: portfolio construction and analysis"
 readme = "README.md"
@@ -19,7 +19,7 @@ dependencies = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/honey"]
+packages = ["src/interview"]
 
 [dependency-groups]
 dev = [

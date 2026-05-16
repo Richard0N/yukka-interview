@@ -1,4 +1,4 @@
-"""Tests for honey.data.repository — Asset, Repository ABC, and YukkaRepository."""
+"""Tests for interview.data.repository — Asset, Repository ABC, and YukkaRepository."""
 
 from __future__ import annotations
 
@@ -8,8 +8,8 @@ from pathlib import Path
 import polars as pl
 import pytest
 
-from honey.data.repository import Asset, Repository
-from honey.data.yukka_repository import YukkaRepository
+from interview.data.repository import Asset, Repository
+from interview.data.yukka_repository import YukkaRepository
 
 AAPL = Asset(name="Apple Inc.", isin="US0378331005", yukka_id="company:apple", ric="AAPL.O")
 

@@ -2,7 +2,7 @@
 
 Examples:
 --------
->>> from honey.data.config import CACHE_DIR
+>>> from interview.data.config import CACHE_DIR
 >>> CACHE_DIR.name
 'cache'
 """

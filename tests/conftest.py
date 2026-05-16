@@ -1,4 +1,4 @@
-"""Test fixtures for the honey package.
+"""Test fixtures for the interview package.
 
 This module contains pytest fixtures that are used across multiple test files.
 These fixtures provide common test data and resources to ensure consistent testing.

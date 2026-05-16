@@ -1,4 +1,4 @@
-"""Tests for honey.data.returns — Returns class."""
+"""Tests for interview.data.returns — Returns class."""
 
 from __future__ import annotations
 
@@ -7,7 +7,7 @@ from datetime import date, timedelta
 import polars as pl
 import pytest
 
-from honey.data.returns import Returns
+from interview.data.returns import Returns
 
 
 @pytest.fixture

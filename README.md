@@ -28,7 +28,7 @@ Portfolio construction and analysis take-home for summer intern candidates.
 
 ```text
 yukka-interview/
-  src/honey/
+  src/interview/
     __init__.py             # Package init (loads .env)
     data/
       config.py             # Cache directory path
@@ -51,7 +51,7 @@ yukka-interview/
 The `YukkaRepository` class provides access to STOXX 600 price data:
 
 ```python
-from honey.data import YukkaRepository
+from interview.data import YukkaRepository
 from yukka.data import Index
 
 repo = YukkaRepository(index=Index.STOXX600)

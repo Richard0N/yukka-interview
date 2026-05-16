@@ -1,1 +1,1 @@
-"""Tests for the honey package."""
+"""Tests for the interview package."""

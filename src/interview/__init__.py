@@ -1,4 +1,4 @@
-"""Honey — portfolio construction and analysis toolkit."""
+"""Interview — portfolio construction and analysis toolkit."""
 
 from pathlib import Path
 

@@ -3,11 +3,11 @@
 # dependencies = [
 #     "marimo>=0.19.6",
 #     "numpy>=2.4.0",
-#     "honey",
+#     "interview",
 #     "cvxpy>=1.8.2",
 # ]
 # [tool.uv.sources]
-# honey = { path = "../../..", editable = true }
+# interview = { path = "../../..", editable = true }
 # ///
 """Experiment 1: Momentum Strategy."""
 
@@ -23,7 +23,7 @@ with app.setup:
     import plotly.graph_objects as go
     import polars as pl
 
-    from honey.data import YukkaRepository
+    from interview.data import YukkaRepository
 
 
 @app.cell(hide_code=True)
@@ -62,7 +62,7 @@ def _():
 def _():
     from yukka.data import Index
 
-    from honey.data.config import CACHE_DIR as _CACHE_DIR
+    from interview.data.config import CACHE_DIR as _CACHE_DIR
 
     repo = YukkaRepository(index=Index.STOXX600)
     assets = repo.assets
