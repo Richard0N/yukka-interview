@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+*.pyo
+.env
+.venv/
+/.coverage
+/_tests/
+
+.idea
+.DS_Store
+__marimo__/

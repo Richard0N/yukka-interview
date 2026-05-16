@@ -1,0 +1,105 @@
+# Yukka Interview Take-Home
+
+Portfolio construction and analysis take-home for summer intern candidates.
+
+## Setup
+
+1. **Fork** this repository on GitHub.
+2. **Clone** your fork:
+
+   ```bash
+   git clone git@github.com:<your-username>/yukka-interview.git
+   cd yukka-interview
+   ```
+
+3. **Install dependencies** (requires [uv](https://docs.astral.sh/uv/)):
+
+   ```bash
+   uv sync --all-extras --all-groups
+   ```
+
+4. **Open the notebook**:
+
+   ```bash
+   make marimo
+   ```
+
+## Project Structure
+
+```text
+yukka-interview/
+  src/honey/
+    __init__.py             # Package init (loads .env)
+    data/
+      config.py             # Cache directory path
+      repository.py         # Repository ABC and Asset dataclass
+      returns.py            # Returns class with preprocessing
+      yukka_repository.py   # Concrete repository (prices, returns)
+      cache/                # Pre-computed parquet files (committed)
+        prices_all.parquet
+        ranks_wide.parquet
+        benchmarks.parquet
+  book/marimo/notebooks/
+    Experiment1.py          # Your working notebook
+  tests/
+    test_repository.py      # Data layer tests
+    test_returns.py         # Returns class tests
+```
+
+## Data Layer
+
+The `YukkaRepository` class provides access to STOXX 600 price data:
+
+```python
+from honey.data import YukkaRepository
+from yukka.data import Index
+
+repo = YukkaRepository(index=Index.STOXX600)
+assets = repo.assets                          # list of Asset objects
+prices = repo.prices(assets, mask=True)       # wide DataFrame: date + one column per asset
+returns = repo.returns(assets)                # same shape, simple returns
+```
+
+All data is cached locally in parquet files -- no API key is needed.
+
+## Your Task
+
+Open the notebook (`make marimo`) and implement:
+
+### Part 1: Signal & IC Analysis
+
+- **Momentum signal**: compute a cross-sectional momentum signal from price data
+  (e.g. 12-month return, or 12-1 month skipping the most recent month).
+- **Information Coefficient (IC)**: measure the rank correlation between your signal
+  and forward 1-month returns. Report the **mean IC** across all months.
+
+### Part 2: Portfolio Construction
+
+- **Markowitz optimisation**: use `cvxpy` to build a long-only portfolio that
+  maximises expected return subject to a risk budget.
+- **Backtest**: compute monthly portfolio returns and report the **annualised Sharpe ratio**.
+
+## Running Tests
+
+```bash
+make test
+# or
+uv run pytest
+```
+
+## Linting
+
+```bash
+make lint
+```
+
+## Submitting Your Work
+
+1. Commit your changes to your fork.
+2. Push to GitHub.
+3. Open a **Pull Request** back to this repository's `main` branch.
+4. Include a brief summary of your approach in the PR description.
+
+## Contact
+
+If you have any questions, reach out to Peter at [peter@yukkalab.com](mailto:peter@yukkalab.com).

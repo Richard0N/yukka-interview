@@ -1,0 +1,66 @@
+# Maximum line length for the entire project
+line-length = 120
+# Target Python version
+target-version = "py312"
+
+[lint]
+select = [
+    "D",   # pydocstyle - Check docstring style
+    "E",   # pycodestyle errors - PEP 8 style guide
+    "F",   # pyflakes - Detect logical errors
+    "I",   # isort - Sort imports
+    "N",   # pep8-naming - Check PEP 8 naming conventions
+    "W",   # pycodestyle warnings - PEP 8 style guide warnings
+    "UP",  # pyupgrade - Upgrade syntax for newer Python
+]
+
+extend-select = [
+    "D105",  # pydocstyle - Require docstrings for magic methods
+    "D107",  # pydocstyle - Require docstrings for __init__
+    "B",     # flake8-bugbear - Find likely bugs and design problems
+    "C4",    # flake8-comprehensions - Better list/set/dict comprehensions
+    "SIM",   # flake8-simplify - Simplify code
+    "PT",    # flake8-pytest-style - Check pytest best practices
+    "RUF",   # Ruff-specific rules
+    "S",     # flake8-bandit - Find security issues
+    "TRY",   # flake8-try-except-raise - Try/except/raise checks
+    "ICN",   # flake8-import-conventions - Import convention enforcement
+]
+
+ignore = [
+    "D203",  # one-blank-line-before-class (conflicts with D211)
+    "D213",  # multi-line-summary-second-line (conflicts with D212)
+]
+
+[lint.pydocstyle]
+convention = "google"
+
+[format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
+
+[lint.per-file-ignores]
+"**/tests/**/*.py" = [
+    "S101",     # Allow assert statements in tests
+    "S603",     # Allow subprocess calls without shell=False check
+    "S607",     # Allow starting processes with partial paths in tests
+    "PLW1510",  # Allow subprocess without explicit check parameter
+]
+"tests/**/*.py" = [
+    "ERA001",   # Allow commented out code in project tests
+    "PLR2004",  # Allow magic values in project tests
+    "RUF002",   # Allow ambiguous unicode in project tests
+    "RUF012",   # Allow mutable class attributes in project tests
+]
+"**/notebooks/*.py" = [
+    "D100",    # No module docstring - marimo requires `import marimo` as the first statement
+    "E501",    # Allow long lines - markdown prose in mo.md() cells
+    "N803",    # Allow non-lowercase variable names in notebooks
+    "S101",    # Allow assert statements in notebooks
+    "PLC0415", # Allow imports not at top-level in notebooks
+    "B018",    # Allow useless expressions in notebooks
+    "RUF001",  # Allow ambiguous unicode in notebooks
+    "RUF002",  # Allow ambiguous unicode in notebooks
+    "F401",    # Allow unused imports in marimo setup blocks (used by cells)
+]
