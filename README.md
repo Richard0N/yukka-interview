@@ -97,8 +97,7 @@ make lint
 
 1. Commit your changes to your fork.
 2. Push to GitHub.
-3. Open a **Pull Request** back to this repository's `main` branch.
-4. Include a brief summary of your approach in the PR description.
+3. Share the link to your fork with us.
 
 ## Contact
 
