@@ -144,7 +144,7 @@ class Strategy:
         self,
         delta: float = 1.0,
         window: int = 60,
-        max_weight: float = 0.05,
+        max_weight: float = 0.2,
         regularisation: float = 1e-8,
     ) -> pl.DataFrame:
         """Run rolling Markowitz optimisation and return portfolio weights.

@@ -98,6 +98,10 @@ def _():
     The `Signal` class is a callable — it implements `__call__` so it can be
     passed directly as `signal_fn` to `Strategy`. Any function with signature
     `Callable[[pl.DataFrame], pl.DataFrame]` can be used instead.
+
+    **Note on nulls:** stocks with fewer than `lookback` months of history
+    produce a `null` signal for those dates (burn-in period). `Strategy`
+    drops these nulls before computing the IC and estimating the covariance matrix.
     """)
     return
 
@@ -123,9 +127,17 @@ def _(prices):
 def _(signal_df):
     # Drop burn-in rows and show first few rows
     entity_cols = [c for c in signal_df.columns if c != "date"]
-    signal_df.filter(
+    table = signal_df.filter(
         pl.any_horizontal(pl.col(c).is_not_null() for c in entity_cols)
     ).head(5)
+
+    mo.vstack([
+        table,
+        mo.md("""
+        Values are cross-sectional z-scores bounded roughly between -1.7 and +1.7,
+        with nulls for stocks outside the STOXX 100 universe at each date, as expected.
+        """)
+    ])
     return (entity_cols,)
 
 
@@ -223,7 +235,7 @@ def _(strat):
     mo.md(f"""
     **Markowitz weights computed**: {len(weights)} rebalancing dates
 
-    Each row sums to 1 with no weight exceeding 5%.
+    Each row sums to 1 with no weight exceeding 20%.
     """)
     return (weights,)
 
@@ -256,47 +268,10 @@ def _(strat):
     mo.md(f"""
     **Annualised Sharpe Ratio**: {strat.sharpe:.4f}
 
-    The strategy achieves a Sharpe of ~0.42 over the sample period (2017–2025),
+    The strategy achieves a Sharpe of ~0.64 over the sample period (2017–2025),
     consistent with academic momentum benchmarks on large-cap European equities.
     Note this is in-sample and does not account for transaction costs.
     """)
-    return
-
-
-@app.cell
-def _(entity_cols, strat, weights):
-    # Plot cumulative portfolio returns
-    weights_matrix = weights.sort("date").select(entity_cols).to_numpy()
-
-    returns_shifted = (
-        strat._returns
-        .sort("date")
-        .select(
-            "date",
-            *[pl.col(c).shift(-1).alias(c) for c in entity_cols]
-        )
-        .filter(pl.col("date").is_in(weights["date"]))
-    )
-
-    portfolio_returns = np.nansum(
-        weights_matrix * returns_shifted.select(entity_cols).to_numpy(),
-        axis=1,
-    )
-    cumulative_returns = np.cumprod(1 + portfolio_returns)
-
-    fig_returns = go.Figure()
-    fig_returns.add_trace(go.Scatter(
-        x=returns_shifted["date"].to_list(),
-        y=cumulative_returns.tolist(),
-        name="Momentum Strategy",
-        line={"color": "green"},
-    ))
-    fig_returns.update_layout(
-        title="Cumulative portfolio returns",
-        xaxis_title="Date",
-        yaxis_title="Cumulative return (1 = starting value)",
-    )
-    fig_returns
     return
 
 

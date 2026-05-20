@@ -57,7 +57,7 @@ class Signal:
         ).with_columns(
             (
                 (pl.col("ranked") - pl.col("ranked").mean().over(self._date_col))
-                / pl.col("ranked").std().over(self._date_col)
+                / pl.col("ranked").std(ddof=1).over(self._date_col)
             ).alias("normalised")
         )
 
